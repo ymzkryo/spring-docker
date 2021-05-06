@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.todo.app.mapper.TodoMapper">
+  <!-- 全タスク一覧 -->
+  <select id="selectAll" resultType="com.todo.app.entity.Todo">
+    select * from todo_items
+  </select>
+
+  <!-- 未完了タスク一覧 -->
+  <select id="selectIncomplete" resultType="com.todo.app.entity.Todo">
+    select * from todo_items where done_flag = 0
+  </select>
+  
+  <!-- 完了タスク一覧 -->
+  <select id="selectComplete" resultType="com.todo.app.entity.Todo">
+    select * from todo_items where done_flag = 1
+  </select>
+  
+  <!-- タスク追加 -->
+  <insert id="add" parameterType="com.todo.app.entity.Todo">
+    insert into todo_items (title,time_limit,done_flag)
+    values (#{title}, #{time_limit},0)
+  </insert>
+  
+  <!-- タスク更新 -->
+  <update id="update" parameterType="com.todo.app.entity.Todo">
+    update todo_items set
+      title = #{title},
+      time_limit = #{time_limit},
+      done_flag = #{done_flag}
+      where id = #{id}
+  </update>
+  
+  <!-- 完了タスク削除 -->
+  <delete id="delete" parameterType="com.todo.app.entity.Todo">
+    delete from todo_items where done_flag = 1
+  </delete>
+
+</mapper>
